@@ -1,6 +1,6 @@
 command: "du -ch ~/.Trash | grep total | cut -c 1-5"
 
-refreshFrequency: 60000
+refreshFrequency: 30000
 
 render: (output) -> """
   <div>
@@ -23,12 +23,8 @@ style: """
 
   a
     margin-left: 10px
-    
+
   img
     margin-top: 5px
     margin-left: 12px
 """
-
-update: (output, domEl) ->
-  if (output.indexOf(" 0B") > -1)
-    $(domEl).find('.size').html("Empty")

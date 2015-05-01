@@ -80,6 +80,3 @@ update: (output, domEl) ->
 
   # Set the HTML of our main DIV.
   div.html("</canvas><div class='wrapper'>" + timeHTML + "</div>")
-
-  afterRender: (domEl) ->
-  uebersicht.makeBgSlice(el) for el in $(domEl).find '.clock-bg-slice'

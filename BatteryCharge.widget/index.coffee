@@ -40,6 +40,6 @@ update: (output, domEl) ->
   $('#chargebar').attr('width',charge * 0.75)
   $('#chargebar').css('fill',fill)
   $('#charge').css('display',if state == 'discharging' then 'none' else 'block')
-  $('#discharge').css('display',if state == 'charging' then 'none' else 'block')
+  $('#discharge').css('display',if state == 'discharging' then 'block' else 'none')
 
   text.text(charge + '%')
