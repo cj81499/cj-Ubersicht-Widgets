@@ -76,6 +76,3 @@ update: (output, domEl) ->
 
   # Set the HTML of our main DIV.
   div.html(weatherHTML)
-
-  afterRender: (domEl) ->
-  uebersicht.makeBgSlice(el) for el in $(domEl).find '.weather-bg-slice'
