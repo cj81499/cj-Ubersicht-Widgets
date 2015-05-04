@@ -1,13 +1,6 @@
 command: "du -ch ~/.Trash | grep total | cut -c 1-5"
 
-refreshFrequency: 30000
-
-render: (output) -> """
-  <div>
-    <img src="TrashSize.widget/icon.png">
-    <a class="size">#{output}</a>
-  </div>
-"""
+refreshFrequency: 10000
 
 style: """
   bottom: 10px
@@ -21,10 +14,19 @@ style: """
   height: 20px
   width: 73px
 
-  a
-    margin-left: 10px
+  .output
+    margin-left: 32px
+    margin-top: -14px
 
-  img
+  .img
     margin-top: 5px
     margin-left: 12px
 """
+
+render: (output) -> """
+  <img class='img' src="TrashSize.widget/icon.png">
+  <div class='output'>
+"""
+
+update: (output, domEl) ->
+  $(domEl).find('.output').html output
