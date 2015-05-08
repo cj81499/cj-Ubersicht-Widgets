@@ -1,38 +1,56 @@
-# A widget that shows current weather.
-# Assembled by Piotr Gajos
-# https://github.com/Pe8er/Ubersicht-Widgets
-# I don't know how to write code, so I obviously pulled pieces from all over the place, particularly from Chris Johnson's World Clock widget. Also big thanks to Josh "Baby Boi" Rutherford.
+# TODO: Add your location and forecast.io api key below
+apiKey   = 'APIKEY'
 
-# jq required for use:  http://stedolan.github.io/jq/
-# Optionally just use brew:  'brew install jq'
+exclude  = "hourly,alerts,flags"
 
-# Execute the shell command.
-command: "Weather.widget/Weather.sh"
+command: "curl -s 'https://api.forecast.io/forecast/#{apiKey}/#{location}?units=us&exclude=#{@exclude}'"
 
-# Set the refresh frequency (milliseconds).
-refreshFrequency: 1800000
+# Refresh every 60 seconds
+refreshFrequency: 300000
 
-# CSS Style
+render: (o) -> """
+  <div class='weather'>
+    <div class='temp'></div>
+    <div class='summary'></div>
+  </div>
+"""
+
+afterRender: (domEl) ->
+  geolocation.getCurrentPosition (e) =>
+
+    @refresh()
+
+update: (output, domEl) ->
+  data  = JSON.parse(output)
+  $domEl = $(domEl)
+
+  $domEl.find('.temp').html """
+    <div class='now'>#{Math.round(data.currently.apparentTemperature)}°</div>
+  """
+
+  #$domEl.find('.summary').text "#{data.currently.summary}, #{data.minutely.summary}"
+  $domEl.find('.summary').text "#{data.currently.summary}"
+
+
+renderForecast: (data) ->
+  """
+    <div>
+      <div class='temp'>#{Math.round(data.currently.apparentTemperature)}°</div>
+    </div>
+  """
+
 style: """
-
   bottom: 70px
   left: 10px
-  width: 75px
-  body.inverted &
-      -webkit-filter invert(100%)
-
-  .wrapper
-    font-family: "Helvetica Neue"
-    text-align: center
-    font-size: 8pt
-    color: white
-    background: rgba(black, 0.2)
-    border: 1px solid rgba(white, 0.6)
-    height: 50px
-
-  .temp, .cond
-    overflow: hidden
-    text-overflow: ellipsis
+  color: white
+  width: 73px
+  height: 50px
+  font-family: "Helvetica Neue"
+  text-align: center
+  font-size: 8pt
+  background: rgba(black, 0.2)
+  border: 1px solid rgba(white, 0.6)
+  display: inline-block
 
   .temp
     font-weight: 700
@@ -42,37 +60,4 @@ style: """
     overflow: visible
     padding-top: 6px
     padding-bottom: 2px
-
-  """
-
-
-# Render the output.
-render: -> """
 """
-
-# Update the rendered output.
-update: (output, domEl) ->
-
-  # Get our main DIV.
-  div = $(domEl)
-
-  # Get our pieces
-  values = output.split("\n")
-
-  # Initialize our HTML.
-  weatherHTML = ''
-
-  # Making my life easy
-  loc = values[0]
-  cond = values[1]
-  temp = values[2]
-
-    # Create the DIVs for each piece of data.
-  weatherHTML = "
-    <div class='wrapper'>
-      <div class='temp'>" + temp + "</div>
-      <div class='cond'>" + cond + "</div>
-    </div>"
-
-  # Set the HTML of our main DIV.
-  div.html(weatherHTML)

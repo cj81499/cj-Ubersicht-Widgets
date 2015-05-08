@@ -2,7 +2,7 @@
 command: "WorldClock.widget/WorldClock.sh"
 
 # Set the refresh frequency (milliseconds).
-refreshFrequency: 6000
+refreshFrequency: 10000
 
 # CSS Style
 style: """

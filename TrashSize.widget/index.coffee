@@ -1,6 +1,6 @@
 command: "du -ch ~/.Trash | grep total | cut -c 1-5"
 
-refreshFrequency: 10000
+refreshFrequency: 30000
 
 style: """
   bottom: 10px
