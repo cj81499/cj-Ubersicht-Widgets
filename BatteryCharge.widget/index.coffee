@@ -1,7 +1,3 @@
-# Attributions:
-# The svg path for the bolt icon provided by Open Iconic
-# The source code is available at https://github.com/iconic/open-iconic
-
 command: "pmset -g batt | grep \"%\" | awk 'BEGINN { FS = \";\" };{ print $3,$2 }' | sed -e 's/-I/I/' -e 's/-0//' -e 's/;//' -e 's/;//'"
 
 refreshFrequency: 20000
@@ -16,7 +12,7 @@ style: """
     height: 20px
     width: 73px
 
-.bolt, .battery
+.charge, .discharge
 	margin-top: -154px
 	margin-left: 12px
 """
@@ -25,8 +21,8 @@ render: -> """
 <svg>
 	<rect id="chargebar" y=18 x=-1 height="2"/>
 	<text id="text" x=32 y=14 style="font-size:12">##%</text>
-  	<div id="charge" class='bolt'> <img src="BatteryCharge.widget/bolt.png"></div>
-  	<div id="discharge" class='battery'> <img src="BatteryCharge.widget/battery.png"></div>
+  	<div id="charge" class='charge'> <img src="BatteryCharge.widget/charge.png"></div>
+  	<div id="discharge" class='discharge'> <img src="BatteryCharge.widget/discharge.png"></div>
 </svg>
 """
 

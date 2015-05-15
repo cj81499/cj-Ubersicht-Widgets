@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
+		<meta http-equiv="content-language" content="en-en" />
+		<title>Jet LP case - CJ</title>
+		<!--Scriptin'-->
+        <script type="text/javascript" src="jquery-1.4.4.js"></script>
+        <script type="text/javascript" src="js.js"></script>
+        <!--Stylin'-->
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<style type="text/css">
+		body {
+			-webkit-user-select: none;
+			overflow: hidden;
+			cursor: default;
+		}
+		</style>
+		<!--Scriptin' take 2-->
+		<script type="text/javascript">
+		    $(document).ready(function() {
+
+		    function coverClick() {
+		    	$("#controls").fadeToggle("fast", "linear");
+		    }
+
+			$("#coverImg").click(function() {
+				coverClick();
+			});
+
+		    });
+
+		</script>
+	</head>
+	<body>
+
+	<div id="content">
+	<!-- Progress bar -->
+		<img id="progressOver" src="img/progressBar.png" onclick="setTime();"/>
+		<img id="progression" src="img/progression.png" height="2px;" onclick="setTime();"/>
+		<img id="Scrubber" src="img/scrubber.png" height="11px;" onclick="setTime();"/>
+	<!--Cover art -->
+		<div id="coverDiv">
+			<img id="coverImg" src="img/noart.png" />
+		</div>
+	<!--Controls-->
+		<div id="controls">
+			<img id="controlBG" src="img/ControlBG.png">
+			<div id="buttons">
+			<a href="#" id="prevage" onClick="iTunes.previousTrack();return false;"><img class="buttonleft" src="img/Reverse.png"></a><a href="#" id="playage" onClick="playPause();return false;" ><img class="button" src="img/placeholder.png"></a><a href="#" id="nextage" onClick="iTunes.nextTrack();return false;"><img class="buttonright" src="img/Forward.png"></a>
+			</div>
+		</div>
+	<!--Text display-->
+		<div id="text">
+			<div id="info">
+				<div id="songname">Loading...</div>
+				<div id="artist">Loading...</div>
+				<div id="dash"> - </div>
+				<div id="album">Loading...</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

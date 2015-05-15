@@ -1,0 +1,113 @@
+/* Body content */
+
+body {
+	margin: 0;
+	background: rgba(0,0,0, 0.2);
+  border: 1px solid rgba(255,255,255, 0.6);
+	color:#fff;
+	font-family: 'Helvetica Neue', Sans-serif;
+}
+
+#content {
+	width: 317px;
+	height: 50px;
+}
+
+#coverDiv {
+	position: absolute;
+}
+
+#coverImg {
+	width: 40px;
+	height: 40px;
+	margin-left:4px;
+	margin-top:4px;
+	border: 1px solid rgba(255,255,255, 0.6);
+	z-index:1;
+}
+
+/* Text display */
+
+#text {
+	margin-left: 50px;
+}
+
+#info {
+	font-family: 'Helvetica Neue', 'Helvetica Neue', sans-serif;
+	left: 50px;
+}
+
+#songname, #artist, #album, #dash {
+	padding-top: 5px;
+	font-family: 'Helvetica Neue', 'Helvetica Neue', sans-serif;
+	font-weight: bold;
+	white-space:nowrap;
+	font-size:10px;
+	color: white;
+	height: 0px;
+}
+
+#artist, #album, #dash {
+	display: inline-block;
+	padding-top: 4px;
+}
+
+/* Progress bar */
+
+#progressOver {
+	position: absolute;
+	top: 47px;
+	left: -2px;
+	opacity:1;
+	z-index:999;
+	}
+
+#progression {
+	position: absolute;
+	top: 49px;
+	left: 1px;
+	opacity: 1;
+	z-index:995;
+}
+
+#Scrubber {
+	position: absolute;
+	top: 46.5px;
+	left: -2.5;
+	opacity: 1;
+	z-index:1001;
+}
+
+/* Controls */
+
+#controls {
+	width: 34px;
+	height: 12px;
+	position: absolute;
+	top: 32px;
+	left: 54px;
+	opacity: 0.6;
+}
+
+img.buttonleft {
+	position:absolute;
+	left:-1px;
+	top:5px;
+}
+
+img.buttonright {
+	position:absolute;
+	left:21px;
+	top:5px;
+}
+
+img.buttonactive {
+	position:absolute;
+	top:5px;
+	left:10px;
+}
+
+#controlBG {
+	margin-top:-11px;
+	margin-left:-3px;
+}
