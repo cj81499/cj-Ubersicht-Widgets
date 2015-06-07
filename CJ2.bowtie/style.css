@@ -35,6 +35,7 @@ body {
 #info {
 	font-family: 'Helvetica Neue', 'Helvetica Neue', sans-serif;
 	left: 50px;
+	white-space:nowrap;
 }
 
 #songname, #artist, #album, #dash {
@@ -50,6 +51,7 @@ body {
 #artist, #album, #dash {
 	display: inline-block;
 	padding-top: 4px;
+	white-space:nowrap;
 }
 
 /* Progress bar */

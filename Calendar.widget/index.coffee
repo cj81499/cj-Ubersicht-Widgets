@@ -10,26 +10,26 @@ command: sundayFirstCalendar
 refreshFrequency: 360000
 
 style: """
-  padding 0px 111.5px
-  bottom: 215px
-  left: 10px
+  padding: 6px 1px
+  bottom: 10px
+  left: 420px
   color: rgba(white)
   font-family: Helvetica Neue
   border: 1px solid rgba(white, 0.6)
   background: rgba(black, 0.2)
   font-size: 12px
-  body.inverted &
-      -webkit-filter invert(100%)
+  line-height: 1
 
   table
     border-collapse: collapse
 
   td
     text-align: center
-    padding: 0px 5px
+    padding: 1px 2px
 
   .today
     background: rgba(white, 0.6)
+    font-weight:bold
 """
 
 render: -> """
@@ -57,7 +57,7 @@ updateHeader: (rows, table) ->
 updateBody: (rows, table) ->
   tbody = table.find("tbody")
   tbody.empty()
-  
+
 
   rows.splice 0, 2
   rows.pop()
