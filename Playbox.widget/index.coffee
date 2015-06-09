@@ -52,10 +52,10 @@ style: """
 
   .album, .by
     color: white06
+    margin-top: 5px
 
   .rating
     float: right
-    position: relative
   """
 
 render: -> """

@@ -6,7 +6,6 @@ style: """
   bottom: 130px
   left: 10px
   font-family: Helvetica Neue
-  display:inline
   color: white
   font-size:12px
 
@@ -14,25 +13,24 @@ style: """
     position: relative
     width: 400px
     height: 40px
-    overflow: auto
     border: 1px solid rgba(white, 0.6)
     background: rgba(black, 0.2)
 
-  .output
+  .quote
     padding: 5px
 
-  .author, .example, .example-meaning
+  .author
     font-size: 10px
     opacity: 0.6
-    padding-top: 2px
     float:right
+    margin-top:25px
+    margin-right:5px
 """
 
 render: (output) -> """
 <div class= "wrapper">
-  <div class="output">
-    <div class="quote"></div>
-    <div class="author"></div>
+  <div class="author"></div>
+<div class="quote"></div>
   </div>
 """
 
