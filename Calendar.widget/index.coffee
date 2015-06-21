@@ -10,10 +10,11 @@ command: sundayFirstCalendar
 refreshFrequency: 360000
 
 style: """
-  padding: 6px 1px
   bottom: 10px
   left: 420px
-  color: rgba(white)
+  height: 108px
+  width: 136px
+  color: white
   font-family: Helvetica Neue
   border: 1px solid rgba(white, 0.6)
   background: rgba(black, 0.2)
@@ -22,6 +23,10 @@ style: """
 
   table
     border-collapse: collapse
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+    margin:0px 1px
 
   td
     text-align: center
@@ -30,13 +35,14 @@ style: """
   .today
     background: rgba(white, 0.6)
     font-weight:bold
+
 """
 
 render: -> """
   <wrapper>
     <table>
-     <thead>
-     </thead>
+      <thead>
+      </thead>
       <tbody>
       </tbody>
     </table>
