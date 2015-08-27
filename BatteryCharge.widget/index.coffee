@@ -10,7 +10,7 @@ style: """
     background: rgba(black, 0.2)
     font-family: Helvetica Neue
     height: 20px
-    width: 73px
+    width: 70px
 
 .charge, .discharge
 	margin-top: -154px
@@ -33,7 +33,7 @@ update: (output, domEl) ->
   charge = parseInt(values[1])
   fill = 'rgba(255,255,255,0.6)'
 
-  $('#chargebar').attr('width',charge * 0.75)
+  $('#chargebar').attr('width',charge * (0.72))
   $('#chargebar').css('fill',fill)
   $('#charge').css('display',if state == 'discharging' then 'none' else 'block')
   $('#discharge').css('display',if state == 'discharging' then 'block' else 'none')

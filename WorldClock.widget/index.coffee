@@ -10,37 +10,30 @@ style: """
   white06 = rgba(white,0.6)
   black02 = rgba(black,0.2)
   box = 4
-  width = 317px
+  rows = 2
 
   bottom: 10px
-  left: 93px
-  overflow: hidden
-  white-space: nowrap
-  text-overflow: ellipsis
+  left: 230px
+  white-space: wrap
   body.inverted &
       -webkit-filter invert(100%)
 
   .wrapper
-    position: relative
     font-family: "Helvetica Neue"
     text-align: center
     font-size: 8pt
-    line-height: 12pt
-    -webkit-font-smoothing: antialiased
     background: black02
-    width: width
+    width: (320px /rows)
     border: 1px solid white06
 
   .box, .lastbox
-    width: (width / box)
-    height: 50px
+    width: (320px / box)
     display: inline-block
+    padding: 15px 0px
 
   .Time
     color: white
     font-weight: 700
-    padding: 8px
-    padding-bottom: 0
 
   .Timezone
     color: white06

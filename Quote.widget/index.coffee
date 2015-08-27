@@ -11,7 +11,7 @@ style: """
 
 .wrapper
     position: relative
-    width: 400px
+    width: 380px
     height: 40px
     border: 1px solid rgba(white, 0.6)
     background: rgba(black, 0.2)

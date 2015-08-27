@@ -11,9 +11,9 @@ refreshFrequency: 360000
 
 style: """
   bottom: 10px
-  left: 420px
-  height: 108px
-  width: 136px
+  left: 90px
+  height: 110px
+  width: 130px
   color: white
   font-family: Helvetica Neue
   border: 1px solid rgba(white, 0.6)
@@ -23,14 +23,14 @@ style: """
 
   table
     border-collapse: collapse
-    position: absolute
-    top: 50%
-    transform: translateY(-50%)
-    margin:0px 1px
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
 
   td
     text-align: center
-    padding: 1px 2px
+    padding: 1px 1.5px
 
   .today
     background: rgba(white, 0.6)

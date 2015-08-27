@@ -10,7 +10,7 @@ base10       = true
 # appearance
 filledStyle  = false # set to true for the second style variant. bgColor will become the text color
 
-width        = '400px'
+width        = '380px'
 barHeight    = '25px'
 labelColor   = '#fff'
 usedColor    = 'rgba(white, 0.6)'
@@ -28,7 +28,7 @@ command: "df -#{if base10 then 'H' else 'h'} | grep '/dev/' | while read -r line
 refreshFrequency: 60000
 
 style: """
-  bottom: 180 px
+  bottom: 180px
   left: 10px
   font-family: Helvetica Neue
   font-weight: 200

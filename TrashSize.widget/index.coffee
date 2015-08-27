@@ -1,4 +1,4 @@
-command: "du -ch ~/.Trash | grep total | cut -c 1-5"
+command: "du -sh ~/.Trash | cut -c 1-5"
 
 refreshFrequency: 30000
 
@@ -12,7 +12,7 @@ style: """
   background: rgba(black, 0.2)
   font-size: 12px
   height: 20px
-  width: 73px
+  width: 70px
 
   .output
     margin-left: 32px
