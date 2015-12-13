@@ -30,9 +30,7 @@ style: """
     margin-left: 8px
 
   .summary
-  font-size: 10px
-
-    div
+    font-size: 10px
 """
 
 render: (o) -> """
@@ -41,12 +39,12 @@ render: (o) -> """
     <div class='summary'></div>
   </div>
 """
+
 update: (output, domEl) ->
   data  = JSON.parse(output)
   $domEl = $(domEl)
 
   $domEl.find('.temp').html """
-    <div class='now'>#{Math.round(data.currently.temperature)}°</div>
+    <div class='now'>#{Math.round(data.currently.apparentTemperature)}°</div>
   """
-
   $domEl.find('.summary').text "#{data.currently.summary}"
