@@ -3,16 +3,15 @@ command: 'curl -s "http://feeds.feedburner.com/brainyquote/QUOTEBR"'
 refreshFrequency: 3600000
 
 style: """
-  bottom: 130px
-  left: 10px
+  bottom: 10px
+  left: 230px
   font-family: Helvetica Neue
   color: white
   font-size:12px
 
 .wrapper
-    position: relative
-    width: 380px
-    height: 40px
+    width: 120px
+    height: 110px
     border: 1px solid rgba(white, 0.6)
     background: rgba(black, 0.2)
 
@@ -23,15 +22,15 @@ style: """
     font-size: 10px
     opacity: 0.6
     float:right
-    margin-top:25px
-    margin-right:5px
+    padding-right: 5px
+    margin-top: -5px
 """
 
 render: (output) -> """
 <div class= "wrapper">
-  <div class="author"></div>
-<div class="quote"></div>
-  </div>
+    <div class="quote"></div>
+    <div class="author"></div>
+</div>
 """
 
 update: (output, domEl) ->

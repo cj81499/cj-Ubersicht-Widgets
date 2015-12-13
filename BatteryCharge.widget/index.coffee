@@ -1,6 +1,6 @@
 command: "pmset -g batt | grep \"%\" | awk 'BEGINN { FS = \";\" };{ print $3,$2 }' | sed -e 's/-I/I/' -e 's/-0//' -e 's/;//' -e 's/;//'"
 
-refreshFrequency: 20000
+refreshFrequency: 60000
 
 style: """
     bottom: 40px

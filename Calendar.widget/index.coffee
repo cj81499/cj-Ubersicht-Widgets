@@ -7,7 +7,7 @@ substr(prevline,4,17) " " substr($0,1,2) " "; } while (1) }\' && date'
 
 command: sundayFirstCalendar
 
-refreshFrequency: 360000
+refreshFrequency: 3600000
 
 style: """
   bottom: 10px

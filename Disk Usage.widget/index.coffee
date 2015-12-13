@@ -10,7 +10,7 @@ base10       = true
 # appearance
 filledStyle  = false # set to true for the second style variant. bgColor will become the text color
 
-width        = '380px'
+width        = '340px'
 barHeight    = '25px'
 labelColor   = '#fff'
 usedColor    = 'rgba(white, 0.6)'
@@ -25,10 +25,10 @@ maxDisks: 1
 
 command: "df -#{if base10 then 'H' else 'h'} | grep '/dev/' | while read -r line; do fs=$(echo $line | awk '{print $1}'); name=$(diskutil info $fs | grep 'Volume Name' | awk '{print substr($0, index($0,$3))}'); echo $(echo $line | awk '{print $2, $3, $4, $5}') $(echo $name | awk '{print substr($0, index($0,$1))}'); done | grep -vE '#{exclude}'"
 
-refreshFrequency: 60000
+refreshFrequency: 3600000
 
 style: """
-  bottom: 180px
+  bottom: 130px
   left: 10px
   font-family: Helvetica Neue
   font-weight: 200
@@ -66,10 +66,7 @@ style: """
 
   .stats
     display: inline-block
-    font-size: 12px
     line-height: 0
-    word-spacing: -2px
-    text-overflow: ellipsis
     vertical-align: bottom
     position: relative
 
@@ -81,14 +78,13 @@ style: """
       display: inline-block
       white-space: nowrap
 
-
     .free
       margin-left: 12px
       color: white
 
     .used
       color: white
-      margin-left: 250px
+      margin-right: 0px
 """
 
 humanize: (sizeString) ->
@@ -96,18 +92,17 @@ humanize: (sizeString) ->
 
 
 renderInfo: (total, used, free, pctg, name) -> """
-  <div class='disk'>
-    <div class='wrapper'>
-      <div class='bar used' style='width: #{pctg}'></div>
-      <div class='bar free' style='width: #{100 - parseInt(pctg)}%'></div>
-
-      <div class='stats'>
+<div class='wrapper'>
+    <div class='stats'>
         <div class='free'>#{@humanize(free)} <span>free</span> </div>
         <div class='used'>#{@humanize(used)} <span>used</span></div>
-      </div>
-      <div class='needle' style="left: #{pctg}"></div>
     </div>
-  </div>
+    <div class='disk'>
+        <div class='bar used' style='width: #{pctg}'></div>
+        <div class='bar free' style='width: #{100 - parseInt(pctg)}%'></div>
+        <div class='needle' style="left: #{pctg}"></div>
+    </div>
+</div>
 """
 
 update: (output, domEl) ->

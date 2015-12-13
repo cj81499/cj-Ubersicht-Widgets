@@ -1,6 +1,6 @@
 command: "du -sh ~/.Trash | cut -c 1-5"
 
-refreshFrequency: 30000
+refreshFrequency: 60000
 
 style: """
   bottom: 10px
