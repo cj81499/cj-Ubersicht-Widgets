@@ -5,11 +5,10 @@ refreshFrequency: 60000
 style: """
   bottom: 10px
   left: 10px
-  color: #fff
-  background-color: rgba(#000, 0.5)
-  font-family: Helvetica Neue
   border: 1px solid rgba(white, 0.6)
   background: rgba(black, 0.2)
+  color: rgba(255, 255, 255, 1)
+  font-family: Helvetica Neue
   font-size: 12px
   height: 20px
   width: 70px
@@ -24,7 +23,7 @@ style: """
 """
 
 render: (output) -> """
-  <img class='img' src="TrashSize.widget/icon.png">
+  <img class='img' src="cj Ubersicht Widgets.widget/TrashSize.widget/icon.png">
   <div class='output'>
 """
 
