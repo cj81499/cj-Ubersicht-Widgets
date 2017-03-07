@@ -90,9 +90,9 @@ update: (output, domEl) ->
   $(domEl).find('.artist').html(Artist)
   $(domEl).find('.album').html(Album)
   $(domEl).find('.progress').css(width: Percent * Width)
-  if Artwork isnt currArt
+  if Artwork != currArt
     $(domEl).find('.art').css('background-image', 'url('+Artwork+')')
-  if Artwork is "No Art"
+  if Artwork == "No Art"
     $(domEl).find('.art').css('display', 'none')
     $(domEl).find('.default').css('display', 'block')
   else
