@@ -10,7 +10,7 @@ command: sundayFirstCalendar
 #Set this to true to enable previous and next month dates, or false to disable
 otherMonths: true
 
-refreshFrequency: "1h"
+refreshFrequency: "10m"
 
 style: """
   bottom: 10px
@@ -22,12 +22,14 @@ style: """
   border: 1px solid rgba(white, 0.6)
   background: rgba(black, 0.2)
   font-size: 12px
-  line-height: 1
+  line-height: 0.95
 
   table
     position: absolute
+    top: calc(50%+1px)
+    transform: translateY(-50%)
     margin-left: -1px
-    margin-top: 2px
+    margin-top: 0px
 
   thead tr
     &:first-child td
@@ -48,14 +50,15 @@ style: """
 
 """
 
-render: -> """
+render: ->
+  """
   <table>
     <thead>
     </thead>
     <tbody>
     </tbody>
   </table>
-"""
+  """
 
 updateHeader: (rows, table) ->
   thead = table.find("thead")

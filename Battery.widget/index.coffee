@@ -35,7 +35,8 @@ style:"""
     margin-left: 14px
 """
 
-render: (output) ->"""
+render: (output) ->
+  """
   <div class='percent'>??%</div>
 
   <img id='icon' class='icon' src='cj Ubersicht Widgets.widget/Battery.widget/images/battery.png'>
@@ -43,7 +44,7 @@ render: (output) ->"""
   <img id='bolt' class='bolt' src='cj Ubersicht Widgets.widget/Battery.widget/images/bolt.png'>
 
   <div id='bar' class='bar'></div>
-"""
+  """
 
 # Update the rendered output.
 update: (output, domEl) ->
@@ -53,7 +54,7 @@ update: (output, domEl) ->
 
   # Get our pieces.
   values = output.split(' @ ')
-  percent = values[0].replace /^\s+|\s+$/g, ""
+  percent = Number(values[0].replace /^\s+|\s+$/g, "")
   status = values[1].replace /^\s+|\s+$/g, ""
   type = values[2].replace /^\s+|\s+$/g, ""
 
@@ -64,25 +65,29 @@ update: (output, domEl) ->
   $('#bolt').css('display',if type == 'AC' and status != "charged" then 'block' else 'none')
 
   # Set bar height and position
-  if 100 >= percent >= 95
+  if 100 >= percent > 95
     $(domEl).find('.bar').css('height', '7px')
     $(domEl).find('.bar').css('margin-top', '6px')
-  if 95 > percent >= 80
+  else if 95 >= percent > 80
     $(domEl).find('.bar').css('height', '5px')
     $(domEl).find('.bar').css('margin-top', '8px')
-  if 80 > percent >= 60
+  else if 80 >= percent > 60
     $(domEl).find('.bar').css('height', '4px')
     $(domEl).find('.bar').css('margin-top', '9px')
-  if 60 > percent >= 40
+  else if 60 >= percent > 40
     $(domEl).find('.bar').css('height', '3px')
     $(domEl).find('.bar').css('margin-top', '10px')
-  if 40 > percent >= 20
+  else if 40 >= percent > 20
     $(domEl).find('.bar').css('height', '2px')
     $(domEl).find('.bar').css('margin-top', '11px')
-  if 20 > percent >= 10
+  else if 20 >= percent > 10
     $(domEl).find('.bar').css('height', '1px')
     $(domEl).find('.bar').css('margin-top', '12px')
-  if 10 > percent >= 0
+  else if 10 >= percent > 0
     $(domEl).find('.bar').css('height', '1px')
     $(domEl).find('.bar').css('margin-top', '12px')
+  # Set bar color
+  if 100 >= percent > 10
+    $(domEl).find('.bar').css('background', 'rgba(255, 255, 255, 0.6)')
+  else if 10 >= percent >= 0
     $(domEl).find('.bar').css('background', 'rgba(255, 0, 0, 0.6)')

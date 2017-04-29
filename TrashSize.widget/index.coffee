@@ -22,10 +22,11 @@ style: """
     margin-left: 12px
 """
 
-render: (output) -> """
+render: (output) ->
+  """
   <img class='img' src="cj Ubersicht Widgets.widget/TrashSize.widget/icon.png">
   <div class='output'>
-"""
+  """
 
 update: (output, domEl) ->
   $(domEl).find('.output').html output
