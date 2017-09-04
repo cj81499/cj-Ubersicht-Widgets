@@ -1,45 +1,43 @@
-options =
-
-  API_key: "???" # Your API key from http://openweathermap.org
-  units: "F" # "F", "C", or "K"
-  decimals: 0 # 0, 1, or 2
-  displayunits: false # When enabled, if the number is too long, units will hide itself.
-
-command: "/usr/local/bin/python3 cj\\ Ubersicht\\ Widgets.widget/Weather.widget/weather.py #{options.API_key} #{options.units} #{options.decimals}"
+command: '/usr/local/bin/python3 cj\\ Ubersicht\\ Widgets.widget/Weather.widget/weather.py'
 
 refreshFrequency: '5m' # Update every 5 minutes
 
 style: """
-  bottom: 70px
-  left: 10px
-  width: 70px
-  height: 50px
-  font-family: "Helvetica Neue"
-  text-align: center
-  color: white
   background: rgba(black, 0.2)
   border: 1px solid rgba(white, 0.6)
+  bottom: 70px
+  color: white
+  font-family: Helvetica Neue
   font-size: 10px
+  height: 50px
+  left: 10px
+  text-align: center
+  width: 70px
 
   .move
-    width: 70px
     position: absolute
     top: 50%
     transform: translateY(-50%)
+    width: 100%
+
+  .weather
+    display: none
+    margin-top: 2px
 
   .temperature
-    font-weight: bold
     font-size: 16pt
-    line-height: @font-size
-    margin-left: 8px
+    font-weight: bold
+    line-height: @font-size - 4px
 
   .condition
     font-size: 10px
     font-weight 400
+    overflow scroll
+    white-space: nowrap
 
-  [class^="error"]
-    font-size: 10px
+  [class^='error']
     display: none
+    font-size: 10px
 """
 
 render: ->
@@ -50,53 +48,53 @@ render: ->
       <div class='condition'></div>
       <div class='location'></div>
     </div>
-    <div class='error1'>Weather not found.<br>Check your connection.</div>
-    <div class='error2'>Weather not found.<br>Set your API Key.</div>
+    <div class = 'error'>
+      <div class='error-internet'>Weather not found.<br>Check your connection.</div>
+      <div class='error-api'>Weather not found.<br>Check your API settings.</div>
+    </div>
   </div>
   """
 
 update: (output, domEl) ->
-
-  # Get our pieces
   values = output.split(" : ")
-  temperature = values[0].trim()
-  condition = values[1].trim()
-  location = values[2]
+  success = (values[0] == 'True')
 
-  # Display an error if something goes wrong
-  if temperature == "Error" or temperature == "offline"
-    if condition == "Couldn't get inputs. (No API Key Set)"
-      $(domEl).find('.error2').css('display', 'block')
+  if success != false
+    temperature = values[1].trim()
+    condition = values[2].trim()
+    location = values[3].trim()
+    units = values[4].trim()
+    showunits = (values[5].trim() == 'True')
+    margin = 8
+
+    if units != 'K'
+      temperature = temperature.concat('°')
     else
-      $(domEl).find('.error1').css('display', 'block')
-    $(domEl).find('.weather').css('display', 'none')
+      temperature = temperature.concat(' ')
+      margin /= 2
+    if showunits == true
+      temperature = temperature.concat("#{units}")
+      margin /= 2
 
-  # Display the weather if everything worked
-  else
-    $(domEl).find('.error1').css('display', 'none')
-    $(domEl).find('.weather').css('display', 'block')
+    $(domEl).find('.temperature').html(temperature)
+    $(domEl).find('.temperature').css('margin-left', margin)
 
-    # Display temperature and show and hide units as needed
-    if options.displayunits != true
-        $(domEl).find('.temperature').html("#{(temperature)}°")
-    else if options.displayunits == true
-      if options.units == "F" and temperature.length < 5
-        $(domEl).find('.temperature').html("#{(temperature)}°#{options.units}")
-      else if options.units == "C" and temperature.length < 4
-        $(domEl).find('.temperature').html("#{(temperature)}°#{options.units}")
-      else
-        $(domEl).find('.temperature').html("#{(temperature)}°")
-
-    # Resize condition and location if they're too long
-    if condition.length >= 15
-      $(domEl).find('.condition').css('font-size', '8px')
-    else
-      $(domEl).find('.condition').css('font-size', '10px')
-    if location.length >= 15
-      $(domEl).find('.location').css('font-size', '8px')
-    else
-      $(domEl).find('.location').css('font-size', '10px')
-
-    # Display condition and location
     $(domEl).find('.condition').html(condition)
+
     $(domEl).find('.location').html(location)
+
+    $(domEl).find('.weather').show()
+    $(domEl).find('.error').hide()
+  else
+    error = values[1].trim()
+
+    if error == 'Internet'
+      $(domEl).find('.error-internet').show()
+      $(domEl).find('.error-api').hide()
+      $(domEl).find('.error').show()
+      $(domEl).find('.weather').hide()
+    else if error == 'API'
+      $(domEl).find('.error-api').show()
+      $(domEl).find('.error-internet').hide()
+      $(domEl).find('.error').show()
+      $(domEl).find('.weather').hide()

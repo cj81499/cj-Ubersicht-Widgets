@@ -1,18 +1,11 @@
-sundayFirstCalendar = 'cal && date "+%-m %-d %y"'
-
-mondayFirstCalendar =  'cal | awk \'{ print " "$0; getline; print "Mo Tu We Th Fr Sa Su"; \
-getline; if (substr($0,1,2) == " 1") print "                    1 "; \
-do { prevline=$0; if (getline == 0) exit; print " " \
-substr(prevline,4,17) " " substr($0,1,2) " "; } while (1) }\' && date "+%-m %-d %y"'
-
-command: sundayFirstCalendar
+command: 'cal && date "+%-m %-d %y"'
 
 #Set this to true to enable previous and next month dates, or false to disable
 otherMonths: true
 
 refreshFrequency: "10m"
 
-style: """
+style:"""
   bottom: 10px
   left: 90px
   height: 110px
@@ -22,54 +15,61 @@ style: """
   border: 1px solid rgba(white, 0.6)
   background: rgba(black, 0.2)
   font-size: 12px
-  line-height: 0.95
+  line-height: 1
+
+  wrapper
+    display: table-cell
+    vertical-align: middle
+    display: table cell;
+    height: 110px
+    width: 131px
 
   table
-    position: absolute
-    top: calc(50%+1px)
-    transform: translateY(-50%)
-    margin-left: -1px
-    margin-top: 0px
+    width: calc(100% - 4px)
+    margin 0 auto
+    border-collapse: collapse
 
-  thead tr
-    &:first-child td
-      padding-bottom: 2px
-    &:last-child td
-      padding-bottom: 4px
+  thead .monthAndYear
+    // padding-bottom: 2px
+    font-weight: bold
+
+  thead .dayOfWeek
+    padding-bottom: 2px
 
   td
     text-align: center
-    padding: 0px 1px
+    padding: 1px 0px 0px
 
   .today
     background: rgba(white, 0.6)
-    font-weight:bold
+    font-weight: bold
 
-  .grey
+  .other_month
     color: rgba(white, 0.6)
-
 """
 
 render: ->
   """
-  <table>
-    <thead>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <wrapper>
+    <table cellpadding="0">
+      <thead>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </wrapper>
   """
 
 updateHeader: (rows, table) ->
   thead = table.find("thead")
   thead.empty()
 
-  thead.append "<tr><td colspan='7'>#{rows[0]}</td></tr>"
+  thead.append "<tr><td class='monthAndYear' colspan='7'>#{rows[0]}</td></tr>"
   tableRow = $("<tr></tr>").appendTo(thead)
   daysOfWeek = rows[1].split(/\s+/)
 
   for dayOfWeek in daysOfWeek
-    tableRow.append "<td>#{dayOfWeek}</td>"
+    tableRow.append "<td class='dayOfWeek'>#{dayOfWeek}</td>"
 
 updateBody: (rows, table) ->
   #Set to 1 to enable previous and next month dates, 0 to disable
@@ -99,7 +99,7 @@ updateBody: (rows, table) ->
         if @otherMonths == true
           k = 6 - j
           cell = $("<td>#{lengths[month-1]-k}</td>").appendTo(tableRow)
-          cell.addClass("grey")
+          cell.addClass("other_month")
         else
           cell = $("<td></td>").appendTo(tableRow)
 
@@ -110,7 +110,7 @@ updateBody: (rows, table) ->
     if i != 0 and 0 < days.length < 7 and @otherMonths == true
       for j in [1..7-days.length]
         cell = $("<td>#{j}</td>").appendTo(tableRow)
-        cell.addClass("grey")
+        cell.addClass("other_month")
 
 update: (output, domEl) ->
   rows = output.split("\n")

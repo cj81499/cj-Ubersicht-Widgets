@@ -1,89 +1,66 @@
-from subprocess import Popen, PIPE
-from time import sleep
+# from time import sleep
 from pyowm import OWM
-from sys import argv
+import json
+import requests
 
-def subprocessCmd(command):
-    # Run command in terminal
-    process = Popen(command, stdout=PIPE, shell=True)
-    proc_stdout = process.communicate()[0].strip()
-    return(proc_stdout)
+apikey = '???'  # get at http://openweathermap.org
+units = 'F'  # 'F', 'C', or 'K'
+decimals = 0  # 0, 1, 2
+showunits = False  # True, False
 
-def isOnline():
-    ping = subprocessCmd('if ping -c 1 google.com >> /dev/null 2>&1; then echo online; else echo offline; fi;').decode('utf-8')
-    if ping == 'offline':
-        return False
-    else:
+
+def checkNet():
+    try:
+        response = requests.get("https://google.com")
         return True
+    except(requests.ConnectionError):
+        return False
 
-def checkOnline(trials, wait):
-    for x in range(trials):
-        if isOnline():
-            return True
-        sleep(wait)
-    return False
 
-def unitFormat(units):
-    if units == 'f' or units == 'F':
-        return('fahrenheit')
-    if units == 'c' or units == 'C':
-        return('celsius')
-    if units == 'k' or units == 'K':
-        return('kelvin')
+def checkAPI():
+    try:
+        return owm.is_API_online()
+    except(Exception):
+        return False
 
-def getCode(large_str, small_str, end_char):
-    # Get text within large_str that comes after small_str, but before end_char
-    small_str_length = len(small_str)
-    index_start = large_str.find(small_str) + small_str_length
-    index_end = large_str[index_start :].find(end_char)
-    code = large_str[index_start : index_start + index_end]
-    return(code)
 
-def getWeather():
-    # Get information about current location from ipinfo.io
-    output = str(subprocessCmd('curl -s ipinfo.io'))
-    city_name = getCode(output, '"city": "', '"')
-    region_name = getCode(output, '"region": "', '"')
-    country_code = getCode(output, '"country": "', '"')
-    search = city_name + ', ' + region_name + ', ' + country_code
-    # Use pyowm to get weather info
-    owm = OWM(API_key)
-    observation = owm.weather_at_place(search)
-    weather = observation.get_weather()
-    temperature = str(weather.get_temperature(units))
-    temperature = getCode(temperature, "'temp': ", ',')
-    if decimals == 0:
-        temperature = str(int(round(float(temperature), decimals)))
+online = checkNet()
+if online is True:
+    owm = OWM(apikey)
+    api_connect = checkAPI()
+    if api_connect is True:
+        payload = {'fields': 'countryCode,regionName,city'}
+        response = requests.get('http://ip-api.com/json/', params=payload)
+        data = response.content
+        # print(response.text, response.content)
+        output = json.loads(data)
+        city = output['city']
+        region_name = output['regionName']
+        country_code = output['countryCode']
+
+        search = ', '.join([city, region_name, country_code])
+        # print(search)
+
+        forecast = owm.daily_forecast(search)
+        observation = owm.weather_at_place(search)
+        weather = observation.get_weather()
+        status = str(weather.get_status().title())
+        detailed_status = str(weather.get_detailed_status().title())
+        unit_transfer = {"C": 'celsius', "F": 'fahrenheit', 'K': 'kelvin'}
+        search_units = unit_transfer[units]
+        temp = round(weather.get_temperature(search_units)['temp'], decimals)
+        if decimals == 0:
+            temp = int(float(temp))
+        temp = str(temp)
+        # print(temp)
+
+        outputs = [api_connect, temp, status, city, units, showunits, decimals]
+
+        for n in range(len(outputs)):
+            outputs[n] = str(outputs[n])
+
+        print(' : '.join(outputs))
     else:
-        temperature = str(round(float(temperature), decimals))
-    conditions = weather.get_detailed_status().title()
-    return(temperature + ' : ' + conditions + ' : ' + city_name)
-
-def tryGetWeather(trials):
-    for x in range(trials):
-        try:
-            return(getWeather())
-        except:
-            pass
-    return('Error : Failed to get weather')
-
-def main():
-    global API_key, units, decimals
-    if checkOnline(10, 2): # If online, get weather, otherwise, print an error.
-        try: # Try to use settings from index.coffee, otherwise, use fallback options
-            API_key = argv[1]
-            units = argv[2]
-            units = unitFormat(units)
-            decimals = int(argv[3])
-            if API_key != '???':
-                try:
-                    print(tryGetWeather(2))
-                except:
-                    print("Error : Couldn't get weather.")
-            else:
-                print("Error : Couldn't get inputs. (No API Key Set)")
-        except:
-            print("Error : Couldn't get inputs.")
-    else:
-        print('offline')
-main()
+        print('False : API')
+else:
+    print('False : Internet')

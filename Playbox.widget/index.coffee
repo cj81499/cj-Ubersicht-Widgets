@@ -43,9 +43,20 @@ style: """
   .text
     margin-left 52px
 
-  .song
+  .songwrapper
     margin-top 5px
-    font-weight 700
+    //background: rgba(0, 255, 41, 0.2)
+    overflow hidden
+    width calc(100% - 4px)
+
+  #song
+    font-weight: 700
+    //overflow: hidden;
+    //background: blue
+    width: 100%
+    display: inline
+    margin: 0px
+
 
   .artist
     margin-top 2px
@@ -80,12 +91,19 @@ style: """
 
   .itunesart
     // background-color rgba(63, 127, 255, 1)
-  
+
   .itunesartfade
     // background-color rgba(127, 127, 255, 1)
 
   .default
     // background-color rgba(255, 0, 255, 1)
+
+  .marquee
+    position relative
+    transform: translateX(100%);
+    padding-left: 100px
+    background: #22dacf;
+    width calc(100% - 4px)
 """
 
 render: (output) ->"
@@ -96,7 +114,9 @@ render: (output) ->"
     <div class='itunesart'></div>
     <img class='default' src='cj Ubersicht Widgets.widget/Playbox.widget/lib/default.png'>
     <div class=text>
-      <div class='song'></div>
+      <div class='songwrapper'>
+        <p id='song'></p>
+      </div>
       <div class='artist'></div>
       <div class='album'></div>
     </div>
@@ -110,7 +130,7 @@ update: (output, domEl) ->
   values = output.split(" @ ")
 
   # Set Values
-  currSong = $(domEl).find('.song').html().trim()
+  currSong = $(domEl).find('#song').html().trim()
   currAlbum = $(domEl).find('.album').html().trim()
   currArtSpotify = $(domEl).find('.spotifyartfade').css('background-image').split('url(').pop().slice(0,-1)
   currArtiTunes = $(domEl).find('.itunesartfade').css('background-image')
@@ -123,12 +143,22 @@ update: (output, domEl) ->
   Width = $(domEl).width()
 
   # Display values
-  $(domEl).find('.song').html(Song)
+  $(domEl).find('#song').html(Song)
   $(domEl).find('.artist').html(Artist)
   $(domEl).find('.album').html(Album)
 
   # Set bar width
   $(domEl).find('.progress').css(width: Percent * Width)
+
+
+  # Marquee if too long
+  # if Song.length > 1
+  #   $(domEl).find('#song').addClass('marquee')
+  #   Artist = $(domEl).find('#song').width()
+  #   $(domEl).find('#song').css('width', '{Artist}')
+  #   $(domEl).find('.artist').html(Artist)
+  #   $('.marquee').animate {right: '+=20px'}, 2000, 'linear'
+  #   $(domEl).find('#song').html(Song)
 
   if Player == "Spotify" # Handle Spotify
     $(domEl).find('.wrapper').css('opacity', '1')
