@@ -38,7 +38,7 @@ style: """
     position absolute
     bottom 1px
     left 1px
-    transition width 2s linear
+    transition width 2.1s linear
 
   .text
     margin-left 52px
